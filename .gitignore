@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Environment
+.env
+*.env
+config.local.php
+
+# Uploads
+backend/uploads/
+*.xlsx
+*.csv
+*.xls
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+error_log
+
+# Build output
+frontend/dist/
+
+# Archives
+*.7z
+*.zip
