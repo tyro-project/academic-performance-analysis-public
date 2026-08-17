@@ -1,0 +1,110 @@
+/* ── Base Styles ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@600;700&display=swap');
+@import './variables.css';
+@import './reset.css';
+
+/* Layout */
+.app-layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr;
+    grid-template-rows: var(--topbar-height) 1fr;
+    min-height: 100vh;
+}
+.app-topbar  { grid-column: 1 / -1; grid-row: 1; }
+.app-sidebar { grid-column: 1; grid-row: 2; }
+.app-main    { grid-column: 2; grid-row: 2; padding: var(--space-xl); overflow-y: auto; }
+
+/* Cards */
+.card {
+    background: var(--white);
+    border: 1px solid var(--slate-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-card);
+}
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-lg);
+}
+.card-title {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--slate-900);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex; align-items: center; gap: var(--space-sm);
+    padding: 9px 18px; border-radius: var(--radius-md);
+    font-size: 13px; font-weight: 600; transition: all .15s;
+}
+.btn-primary { background: var(--indigo); color: var(--white); }
+.btn-primary:hover { background: var(--indigo-dark); }
+.btn-outline { border: 1.5px solid var(--slate-200); color: var(--slate-700); }
+.btn-outline:hover { border-color: var(--indigo); color: var(--indigo); }
+.btn-danger  { background: #fef2f2; color: var(--error); }
+.btn-danger:hover  { background: var(--error); color: var(--white); }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+
+/* Form fields */
+.field { margin-bottom: var(--space-md); }
+.field label { display: block; font-size: 13px; font-weight: 500; color: var(--slate-600); margin-bottom: 6px; }
+.field input, .field select, .field textarea {
+    width: 100%; padding: 9px 14px;
+    border: 1.5px solid var(--slate-200); border-radius: var(--radius-md);
+    font-size: 14px; color: var(--slate-900); background: var(--white);
+    outline: none; transition: border-color .15s, box-shadow .15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--indigo);
+    box-shadow: 0 0 0 3px var(--indigo-dim);
+}
+
+/* Tables */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th { padding: 10px 14px; text-align: left; font-weight: 600; color: var(--slate-600); background: var(--slate-50); border-bottom: 1px solid var(--slate-200); }
+tbody td { padding: 12px 14px; border-bottom: 1px solid var(--slate-100); color: var(--slate-700); }
+tbody tr:hover { background: var(--slate-50); }
+tbody tr:last-child td { border-bottom: none; }
+
+/* Badges */
+.badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.badge-success { background: #dcfce7; color: #15803d; }
+.badge-error   { background: #fee2e2; color: #b91c1c; }
+.badge-info    { background: #dbeafe; color: #1d4ed8; }
+.badge-warning { background: #fef3c7; color: #92400e; }
+
+/* Modal */
+.modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(15,23,42,.4); z-index: 1000;
+    align-items: center; justify-content: center;
+}
+.modal--open { display: flex; }
+.modal-box {
+    background: var(--white); border-radius: var(--radius-xl);
+    padding: var(--space-xl); width: 100%; max-width: 480px;
+    box-shadow: var(--shadow-lg); animation: zoomIn .2s ease;
+}
+.modal-header {
+    display: flex; align-items: center;
+    justify-content: space-between; margin-bottom: var(--space-lg);
+}
+.modal-title { font-family: var(--font-heading); font-size: 18px; font-weight: 700; }
+.modal-close { color: var(--slate-400); font-size: 20px; cursor: pointer; }
+.modal-close:hover { color: var(--slate-800); }
+
+/* Animations */
+@keyframes zoomIn { from { transform: scale(.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes slideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .app-layout { grid-template-columns: 1fr; }
+    .app-sidebar { display: none; }
+    .app-main { grid-column: 1; padding: var(--space-md); }
+}

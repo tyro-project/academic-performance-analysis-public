@@ -1,0 +1,24 @@
+.app-topbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--slate-200);
+    height: var(--topbar-height);
+    position: sticky; top: 0; z-index: 100;
+}
+.topbar-inner {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    height: 100%; padding: 0 var(--space-xl);
+}
+.topbar-left, .topbar-right { display: flex; align-items: center; gap: var(--space-md); }
+.topbar-brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 14px; font-weight: 600; color: var(--slate-900); }
+.sidebar-toggle { display: flex; align-items: center; padding: 6px; border-radius: var(--radius-sm); color: var(--slate-600); }
+.sidebar-toggle:hover { background: var(--slate-100); }
+.topbar-user { display: flex; align-items: center; gap: 10px; cursor: pointer; position: relative; padding: 6px 10px; border-radius: var(--radius-md); }
+.topbar-user:hover { background: var(--slate-100); }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--indigo); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
+.user-name { font-size: 13px; font-weight: 600; color: var(--slate-800); display: block; }
+.user-role { font-size: 11px; color: var(--slate-400); text-transform: capitalize; display: block; }
+.user-dropdown { display: none; position: absolute; top: 110%; right: 0; background: var(--white); border: 1px solid var(--slate-200); border-radius: var(--radius-md); box-shadow: var(--shadow-md); min-width: 140px; overflow: hidden; }
+.topbar-user:hover .user-dropdown { display: block; }
+.user-dropdown button { width: 100%; padding: 10px 16px; text-align: left; font-size: 13px; color: var(--error); }
+.user-dropdown button:hover { background: var(--slate-50); }

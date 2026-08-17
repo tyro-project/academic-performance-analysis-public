@@ -1,0 +1,14 @@
+<!-- Reusable confirm modal — included once per page -->
+<div class="modal" id="confirmModal">
+    <div class="modal-box" style="max-width:380px">
+        <div class="modal-header">
+            <span class="modal-title" id="confirmTitle">Are you sure?</span>
+            <button class="modal-close" onclick="Modal.close('confirmModal')">✕</button>
+        </div>
+        <p id="confirmMessage" style="font-size:14px;color:var(--slate-600);margin-bottom:24px"></p>
+        <div style="display:flex;gap:10px;justify-content:flex-end">
+            <button class="btn btn-outline" onclick="Modal.close('confirmModal')">Cancel</button>
+            <button class="btn btn-danger" id="confirmBtn">Delete</button>
+        </div>
+    </div>
+</div>
