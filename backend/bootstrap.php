@@ -16,7 +16,7 @@ ini_set('log_errors', '1');
 define('ROOT_PATH',    dirname(__DIR__));
 define('BACKEND_PATH', __DIR__);
 define('UPLOAD_PATH',  ROOT_PATH . '/uploads');
-define('LOG_PATH',     ROOT_PATH . '/logs');
+define('LOG_PATH',     BACKEND_PATH . '/logs');
 
 // ── Autoloader (Composer) ────────────────────────────────
 if (file_exists(BACKEND_PATH . '/vendor/autoload.php')) {
@@ -29,7 +29,12 @@ define('BASE_URL', getenv('APP_URL')  ?: 'https://academic.tyro-project.in');
 define('API_URL',  getenv('API_URL')  ?: 'https://academic.tyro-project.in/backend');
 
 // ── CORS Headers ─────────────────────────────────────────
-header('Access-Control-Allow-Origin: ' . BASE_URL);
+$allowed_origin = BASE_URL;
+if (APP_ENV !== 'production') {
+    // Allow any origin in local/dev environment
+    $allowed_origin = $_SERVER['HTTP_ORIGIN'] ?? BASE_URL;
+}
+header('Access-Control-Allow-Origin: ' . $allowed_origin);
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
@@ -127,8 +132,24 @@ function clear_session(): void {
 
 // ── Request Helpers ──────────────────────────────────────
 function get_json_body(): array {
+    $content_type = $_SERVER['CONTENT_TYPE'] ?? '';
+    // For multipart/form-data (file uploads), read from $_POST and $_FILES
+    if (str_contains($content_type, 'multipart/form-data')) {
+        return $_POST;
+    }
+    // For application/x-www-form-urlencoded
+    if (str_contains($content_type, 'application/x-www-form-urlencoded')) {
+        return $_POST;
+    }
+    // Default: raw JSON body
     $body = file_get_contents('php://input');
     return json_decode($body, true) ?? [];
+}
+
+function get_uploaded_file(string $key): ?array {
+    return isset($_FILES[$key]) && $_FILES[$key]['error'] === UPLOAD_ERR_OK
+        ? $_FILES[$key]
+        : null;
 }
 
 function method_required(string $method): void {
