@@ -24,8 +24,21 @@ const api = {
         }
 
         try {
-            const res  = await fetch(url, config);
-            const data = await res.json();
+            const res = await fetch(url, config);
+
+            // Check if response is valid JSON before parsing
+            const contentType = res.headers.get('content-type');
+            let data;
+
+            if (contentType && contentType.includes('application/json')) {
+                data = await res.json();
+            } else {
+                // Server returned non-JSON (error, warning, or HTML)
+                const text = await res.text();
+                console.error('[Server Response - Not JSON]', text.substring(0, 500));
+                Toast.error('Server error — invalid response format. Check console for details.');
+                return null;
+            }
 
             if (res.status === 401) {
                 window.location.href = '/frontend/modules/auth/role-selection/index.html';
@@ -45,8 +58,8 @@ const api = {
             return data;
 
         } catch (err) {
-            Toast.error('Network error — please check your connection');
-            console.error('[API Error]', err);
+            console.error('[API Request Failed]', err);
+            Toast.error('Request failed — please check your connection and try again');
             return null;
         }
     },

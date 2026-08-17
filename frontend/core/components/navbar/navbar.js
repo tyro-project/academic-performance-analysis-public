@@ -8,8 +8,16 @@ async function initNavbar() {
     document.getElementById('userAvatar').textContent = user.name?.charAt(0).toUpperCase() ?? '?';
 }
 
-document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-    document.querySelector('.app-sidebar')?.classList.toggle('sidebar--hidden');
-});
+function bindNavbarListeners() {
+    // Sidebar toggle
+    document.getElementById('sidebarToggle')?.addEventListener('click', () => {
+        document.querySelector('.app-sidebar')?.classList.toggle('sidebar--hidden');
+    });
 
-export { initNavbar };
+    // Logout button
+    document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+        await Auth.logout();
+    });
+}
+
+export { initNavbar, bindNavbarListeners };
